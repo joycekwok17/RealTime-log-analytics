@@ -1,5 +1,6 @@
+# main.py: FastAPI application that provides endpoints to check service health and retrieve active user analytics from PostgreSQL
 import os
-import psycopg2
+import psycopg
 from fastapi import FastAPI
 from pydantic import BaseModel
 from dotenv import load_dotenv
@@ -28,12 +29,13 @@ def health():
 def active_users(req: WindowRequest):
     q = """
     SELECT window_start, window_end, action, active_users
-    FROM active_users_5m
+    FROM active_users
     WHERE window_end IS NOT NULL
     ORDER BY window_end DESC
     LIMIT %s
     """
-    with psycopg2.connect(**PG_CONN) as conn:
+
+    with psycopg.connect(**PG_CONN) as conn:
         with conn.cursor() as cur:
             cur.execute(q, (req.limit,))
             rows = cur.fetchall()
