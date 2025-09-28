@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   redpanda:
-    image: redpandadata/redpanda:v24.1
+    image: redpandadata/redpanda:latest
     command: >
       redpanda start --overprovisioned --smp 1 --memory 1G --reserve-memory 0M
       --node-id 0 --check=false
