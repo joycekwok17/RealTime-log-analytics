@@ -1,0 +1,22 @@
+version: "3.8"
+services:
+  redpanda:
+    image: redpandadata/redpanda:v24.1
+    command: >
+      redpanda start --overprovisioned --smp 1 --memory 1G --reserve-memory 0M
+      --node-id 0 --check=false
+      --kafka-addr PLAINTEXT://0.0.0.0:9092
+      --advertise-kafka-addr PLAINTEXT://localhost:9092
+      --rpc-addr 0.0.0.0:33145
+      --advertise-rpc-addr 127.0.0.1:33145
+    ports:
+      - "9092:9092"
+      - "9644:9644"
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: analytics
+    ports:
+      - "5432:5432"
