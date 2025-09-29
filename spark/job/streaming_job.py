@@ -1,22 +1,24 @@
 # spark streaming job that reads user activity logs from Kafka, 
 # processes them to compute active users in time windows, 
 # and writes the results to PostgreSQL
-import os
 from pyspark.sql import SparkSession
 from pyspark.sql import functions as F
 from spark.job.transforms import parse_kafka_json, agg_active_users
+from config.loader import load_config
 
-KAFKA_BOOT = os.getenv("KAFKA_BOOTSTRAP", "localhost:9092")
-KAFKA_TOPIC = os.getenv("KAFKA_TOPIC", "user-logs")
+config = load_config()
+
+KAFKA_BOOT = config["kafka"]["bootstrap_servers"]
+KAFKA_TOPIC = config["kafka"]["topic"]
 
 # PostgreSQL connection parameters 
-PG_URL  = os.getenv("PG_URL",  "jdbc:postgresql://localhost:5432/analytics") 
-PG_USER = os.getenv("PG_USER", "postgres")
-PG_PASS = os.getenv("PG_PASS", "postgres")
-PG_TABLE = os.getenv("PG_TABLE", "active_users")
+PG_URL  = config["db"]["url"]
+PG_USER = config["db"]["user"]
+PG_PASS = config["db"]["password"]
+PG_TABLE = config["db"]["table"]
 
-WINDOW_MIN = int(os.getenv("WINDOW_MIN", "5"))
-CHECKPOINT = os.getenv("CHECKPOINT_DIR", "/tmp/spark-checkpoints/active-users")
+WINDOW_MIN = int(config["spark"]["window_duration"].split(" ")[0])
+CHECKPOINT = config["spark"]["checkpoint_location"]
 
 # write each micro-batch to PostgreSQL
 def write_batch_to_pg(df, epoch_id: int):

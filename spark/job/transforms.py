@@ -1,3 +1,4 @@
+# Transform functions for Spark Structured Streaming
 from pyspark.sql import functions as F
 from pyspark.sql import DataFrame
 from spark.job.schema import LOG_SCHEMA

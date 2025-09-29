@@ -24,9 +24,7 @@ python producer/produce_logs.py
 ### 3) Run the Spark streaming job
 ```bash
 pip install -r spark/requirements.txt
-PYTHONPATH=$(pwd) spark-submit \
-  --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.1,org.postgresql:42.7.3 \
-  spark/job/streaming_job.py
+PYTHONPATH=$(pwd) spark-submit   --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.1,org.postgresql:postgresql:42.7.3   spark/job/streaming_job.py
 ```
 
 ### 4) Run the API

@@ -2,9 +2,12 @@
 import json, os, random, time, uuid
 from datetime import datetime, timezone
 from kafka import KafkaProducer
+from config.loader import load_config
 
-TOPIC = os.getenv("KAFKA_TOPIC", "user-logs")
-BOOTSTRAP = os.getenv("KAFKA_BOOTSTRAP", "localhost:9092")
+config = load_config()
+
+TOPIC = config["kafka"]["topic"]
+BOOTSTRAP = config["kafka"]["bootstrap_servers"]
 
 actions = ["view", "click", "purchase", "signup", "like"]
 

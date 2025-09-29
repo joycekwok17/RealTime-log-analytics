@@ -1,0 +1,38 @@
+kafka:
+  bootstrap_servers: "localhost:9092"
+  topic: "user-logs"
+  group_id: "log-analytics"
+  auto_offset_reset: "latest"
+  enable_auto_commit: true
+  session_timeout_ms: 30000
+
+db:
+  url: "postgresql://postgres:postgres@localhost:5432/analytics"
+  user: "postgres"
+  password: "postgres"
+  table: "active_users"
+  host: "localhost"
+  port: 5432
+  dbname: "analytics"
+
+
+spark:
+  master: "local[*]"
+  app_name: "RealTimeLogAnalytics"
+  checkpoint_location: "/tmp/spark-checkpoints/active-users"
+  batch_interval: "10 seconds"
+  window_duration: "1 minute"
+  slide_duration: "30 seconds"
+
+api:
+  host: "localhost"
+  port: 8000
+  db_pool_size: 10
+
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "app.log"
+  console: true
+  file_rotation: "10MB"
+  backup_count: 5

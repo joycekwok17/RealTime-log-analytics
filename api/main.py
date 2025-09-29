@@ -1,18 +1,18 @@
 # main.py: FastAPI application that provides endpoints to check service health and retrieve active user analytics from PostgreSQL
-import os
 import psycopg 
 from fastapi import FastAPI
 from pydantic import BaseModel
-from dotenv import load_dotenv
+from config.loader import load_config
 
-load_dotenv()
+
+config = load_config()
 
 PG_CONN = dict(
-    host=os.getenv("PG_HOST", "localhost"),
-    port=int(os.getenv("PG_PORT", "5432")),
-    dbname=os.getenv("PG_DB", "analytics"),
-    user=os.getenv("PG_USER", "postgres"),
-    password=os.getenv("PG_PASS", "postgres"),
+    host=config["db"]["host"],
+    port=int(config["db"]["port"]),
+    dbname=config["db"]["dbname"],
+    user=config["db"]["user"],
+    password=config["db"]["password"],
 )
 
 app = FastAPI(title="Active Users Analytics API")

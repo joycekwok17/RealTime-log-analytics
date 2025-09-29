@@ -1,3 +1,4 @@
+# schema definition for incoming log data
 from pyspark.sql.types import StructType, StructField, StringType, LongType, MapType
 
 LOG_SCHEMA = StructType([
