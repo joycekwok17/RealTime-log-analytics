@@ -1,6 +1,6 @@
 # main.py: FastAPI application that provides endpoints to check service health and retrieve active user analytics from PostgreSQL
 import os
-import psycopg
+import psycopg 
 from fastapi import FastAPI
 from pydantic import BaseModel
 from dotenv import load_dotenv

@@ -1,3 +1,4 @@
+# bigquery version of streaming job
 import os
 from pyspark.sql import SparkSession
 from transforms import parse_kafka_json, agg_active_users
